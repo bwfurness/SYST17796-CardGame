@@ -11,8 +11,7 @@ package ca.sheridancollege.project;
  * should remember to add themselves as a modifier.
  * @author dancye, 2018
  */
-public abstract class Card 
-{
+public abstract class Card {
     //default modifier for child classes
     
     /**
