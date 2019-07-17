@@ -13,11 +13,12 @@ import java.util.Collections;
  * HINT, you might want to subclass this more than once.
  * The group of cards has a maximum size attribute which is flexible for reuse.
  * @author dancye
+ * @param <T> Card type
  */
-public class GroupOfCards {
+public class GroupOfCards <T extends Card> {
    
     //The group of cards, stored in an ArrayList
-    private ArrayList <Card> cards;
+    private ArrayList <T> cards;
     private int size;//the size of the grouping
     
     public GroupOfCards(int givenSize) {
@@ -26,15 +27,19 @@ public class GroupOfCards {
     
     /**
      * A method that will get the group of cards as an ArrayList
-     * @return the group of cards.
+     * @return the group of	 cards.
      */
-    public ArrayList<Card> showCards() {
+    public ArrayList<T> showCards() {
         return cards;
     }
     
     public void shuffle() {
 		Collections.shuffle(cards);
     }
+	
+	public void addCard(T card) {
+		cards.add(card);
+	}
 
     /**
      * @return the size of the group of cards
