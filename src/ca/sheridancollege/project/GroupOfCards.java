@@ -23,6 +23,7 @@ public class GroupOfCards <T extends Card> {
     
     public GroupOfCards(int givenSize) {
         size = givenSize;
+		cards = new ArrayList<>(size);
     }
     
     /**
@@ -37,10 +38,19 @@ public class GroupOfCards <T extends Card> {
 		Collections.shuffle(cards);
     }
 	
-	public void addCard(T card) {
+	public int addCard(T card) {
 		cards.add(card);
+		return 0;
 	}
-
+	
+	public T takeCard(){
+		return cards.remove(0);
+	}
+	
+	public boolean removeCard(T card){
+		return cards.remove(card);
+	}
+	
     /**
      * @return the size of the group of cards
      */

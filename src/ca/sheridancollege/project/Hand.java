@@ -14,5 +14,9 @@ public class Hand extends GroupOfCards<CribbageCard> {
 	public Hand() {
 		super(6);
 	}
+	
+	public int countPoints(){
+		return 0; // todo
+	}
 
 }

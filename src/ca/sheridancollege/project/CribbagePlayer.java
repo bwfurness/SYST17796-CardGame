@@ -11,8 +11,13 @@ package ca.sheridancollege.project;
  */
 public class CribbagePlayer extends Player {
 
+	private RegularHand hand;
+	private int points;
+	
 	public CribbagePlayer(String name) {
 		super(name);
+		hand = new RegularHand();
+		points = 0;
 	}
 
 	@Override
@@ -24,6 +29,19 @@ public class CribbagePlayer extends Player {
 		preplay,
 		peg,
 		count
+	}
+	
+	public RegularHand getHand(){
+		return hand;
+	}
+	
+	public boolean score(int points){
+		this.points += points;
+		return points > 120;
+	}
+	
+	public int getPoints(){
+		return points;
 	}
 	
 }

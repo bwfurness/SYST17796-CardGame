@@ -10,5 +10,13 @@ package ca.sheridancollege.project;
  *
  */
 public class RegularHand extends Hand {
+	
+	public void giveToCrib(CribbageCard card, Crib crib){
+		if (removeCard(card)){
+			crib.addCard(card);
+		}else{
+			throw new IllegalArgumentException(card.toString() + " is not in this hand.");
+		}
+	}
 
 }

@@ -15,4 +15,14 @@ public class Starter extends GroupOfCards<CribbageCard> {
 		super(1);
 	}
 	
+	@Override
+	public int addCard(CribbageCard card){
+		super.addCard(card);
+		if (card.getValue() == Value.JACK){
+			return 2;
+		}else{
+			return 0;
+		}
+	}
+	
 }

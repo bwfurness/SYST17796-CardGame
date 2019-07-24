@@ -19,5 +19,13 @@ public class Deck extends GroupOfCards<CribbageCard> {
 			}
 		}
 	}
+	
+	public void deal(RegularHand dealer, RegularHand nonDealer){
+		shuffle();
+		for (int i = 0; i < 6; i ++){
+			nonDealer.addCard(takeCard());
+			dealer.addCard(takeCard());
+		}
+	}
 
 }
