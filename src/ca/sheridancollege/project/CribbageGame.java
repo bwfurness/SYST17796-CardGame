@@ -46,7 +46,13 @@ public class CribbageGame extends Game<CribbagePlayer> {
 		deck.deal(cribHand, nonCribHand);
 		playerWithoutCrib.play();
 		playerWithCrib.play();
-		playerWithCrib.score(starter.addCard(deck.takeCard()));
+		boolean won = playerWithCrib.score(starter.addCard(deck.cut()));
+		if (won){
+			declareWinner();
+		}else{
+			do{
+			} while (!pegging.isFull());
+		}
 	}
 
 	@Override

@@ -27,5 +27,9 @@ public class Deck extends GroupOfCards<CribbageCard> {
 			dealer.addCard(takeCard());
 		}
 	}
+	
+	public CribbageCard cut(){
+		return takeCard();
+	}
 
 }

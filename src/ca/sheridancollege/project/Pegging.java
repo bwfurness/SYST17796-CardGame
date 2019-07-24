@@ -29,4 +29,8 @@ public class Pegging extends GroupOfCards<CribbageCard> {
 		return currentCount + card.getPoints() <= 31;
 	}
 	
+	public boolean isFull(){
+		return showCards().size() == getSize();
+	}
+	
 }
