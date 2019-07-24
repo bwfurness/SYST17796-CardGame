@@ -13,6 +13,7 @@ public class CribbagePlayer extends Player {
 
 	private RegularHand hand;
 	private int points;
+	private CribbagePhase phase;
 	
 	public CribbagePlayer(String name) {
 		super(name);
@@ -22,13 +23,38 @@ public class CribbagePlayer extends Player {
 
 	@Override
 	public void play() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		switch (phase){
+			case PREPLAY:
+				preplay();
+				break;
+			case PEG:
+				peg();
+				break;
+			case COUNT:
+				count();
+				break;
+		}
+	}
+	
+	public void preplay(){
+		phase = CribbagePhase.PEG;
+	}
+	
+	public void peg(){
+	}
+	
+	public void count(){
+		phase = CribbagePhase.PREPLAY;
+	}
+	
+	public void donePegging(){
+		phase = CribbagePhase.COUNT;
 	}
 	
 	public enum CribbagePhase{
-		preplay,
-		peg,
-		count
+		PREPLAY,
+		PEG,
+		COUNT
 	}
 	
 	public RegularHand getHand(){

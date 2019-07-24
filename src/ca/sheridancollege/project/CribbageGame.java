@@ -51,7 +51,13 @@ public class CribbageGame extends Game<CribbagePlayer> {
 			declareWinner();
 		}else{
 			do{
+				playerWithoutCrib.play();
+				playerWithCrib.play();
 			} while (!pegging.isFull());
+			playerWithoutCrib.donePegging();
+			playerWithCrib.donePegging();
+			playerWithoutCrib.play();
+			playerWithCrib.play();
 		}
 	}
 
