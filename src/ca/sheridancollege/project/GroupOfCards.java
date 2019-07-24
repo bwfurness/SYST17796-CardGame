@@ -39,6 +39,9 @@ public class GroupOfCards <T extends Card> {
     }
 	
 	public int addCard(T card) {
+		if (cards.size() == size){
+			throw new IndexOutOfBoundsException("This group of cards is already full");
+		}
 		cards.add(card);
 		return 0;
 	}
