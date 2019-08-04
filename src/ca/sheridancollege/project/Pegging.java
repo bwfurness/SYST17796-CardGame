@@ -83,7 +83,6 @@ public class Pegging extends GroupOfCards<CribbageCard> {
 		cards.sort((a, b) -> {return a.getValue().compareTo(b.getValue());});
 		for (int i = 1; i < cards.size(); i ++){
 			if (cards.get(i - 1).getValue().compareTo(cards.get(i).getValue()) != -1){
-				System.out.println(cards.get(i - 1).getValue().compareTo(cards.get(i).getValue()));
 				return false;
 			}
 		}
