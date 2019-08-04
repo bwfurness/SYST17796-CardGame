@@ -21,6 +21,13 @@ public class RegularHand extends Hand {
 		}
 	}
 
+	public RegularHand copy(){
+		RegularHand copy = new RegularHand();
+		for (CribbageCard card : showCards()){
+			addCard(card);
+		}
+		return copy;
+	}
 	
 	@Override
 	public int flush(CribbageCard starter){
@@ -31,7 +38,7 @@ public class RegularHand extends Hand {
 				return 0;
 			}
 		}
-		if (hand.get(0).getSuit() == starter.getSuit()){
+		if (starter != null && hand.get(0).getSuit() == starter.getSuit()){
 			return 5;
 		}else{
 			return 4;

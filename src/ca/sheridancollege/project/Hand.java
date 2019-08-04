@@ -18,6 +18,7 @@ public abstract class Hand extends GroupOfCards<CribbageCard> {
 		super(6);
 	}
 	
+	
 	public int countPoints(Starter starter){
 		int points = 0;
 		CribbageCard starterCard = starter.showCards().get(0);
@@ -37,10 +38,30 @@ public abstract class Hand extends GroupOfCards<CribbageCard> {
 		handPlusStarter.addAll(showCards());
 		handPlusStarter.add(starterCard);
 		points += count15(handPlusStarter);
+		System.out.println("15 " + points);
+		points += pair(handPlusStarter);
+		System.out.println("Pair is " + points);
+		points += run(handPlusStarter);
+		System.out.println("Run is " + points);
+		points += flush(starterCard);
+		System.out.println("Flush for " + points);
+		return points;
+	}
+	
+	// silently counts points with no starter.
+	public int countPoints(){
+		int points = 0;
+		ArrayList<CribbageCard> handPlusStarter = new ArrayList<>(5);
+		handPlusStarter.addAll(showCards());
+		points += count15(handPlusStarter);
 		points += pair(handPlusStarter);
 		points += run(handPlusStarter);
-		points += flush(starterCard);
-		return points; // todo
+		points += flush(null);
+		return points;	
+	}
+	
+	public void removeCardAt(int index){
+		showCards().remove(index);
 	}
 	
 	public int count15(List<CribbageCard> cards){
@@ -56,7 +77,6 @@ public abstract class Hand extends GroupOfCards<CribbageCard> {
 					ret += count15(newTotal, cards.subList(i + 1, cards.size()));
 				}
 			}else if (newTotal == 15){
-				System.out.println("15 " + (ret + 2));
 				ret += 2;
 			}
 		}
@@ -68,7 +88,6 @@ public abstract class Hand extends GroupOfCards<CribbageCard> {
 		for (int i = 1; i < cards.size(); i++){
 			for (int j = 0; j < i; j++){
 				if (cards.get(i).getValue() == cards.get(j).getValue()){
-					System.out.println("pair");
 					ret += 2;
 				}
 			}

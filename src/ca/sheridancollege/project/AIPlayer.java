@@ -18,9 +18,26 @@ public class AIPlayer extends CribbagePlayer {
 	
 	@Override
 	public void preplay(){
+		// the AI currently does not consider the crib.
+		int card1 = 0;
+		int card2 = 0;
+		int score = -1;
+		for (int i = 0; i < 5; i ++){
+			for (int j = i + 1; j < 6; j ++){
+				Hand tempHand = getHand().copy();
+				tempHand.removeCardAt(j);
+				tempHand.removeCardAt(i);
+				if (tempHand.countPoints() > score){
+					card1 = i;
+					card2 = j;
+					score = tempHand.countPoints();
+				}
+			}
+		}
 		// we will make the ai make sense later
-		getHand().giveToCrib(getHand().showCards().get(0), getCrib());
-		getHand().giveToCrib(getHand().showCards().get(0), getCrib());
+		getHand().giveToCrib(getHand().showCards().get(card2), getCrib());
+		getHand().giveToCrib(getHand().showCards().get(card1), getCrib());
+		getHand().showCards().sort((a, b) -> {return b.getValue().compareTo(a.getValue());});
 	}
 	
 	@Override
