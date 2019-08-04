@@ -90,6 +90,11 @@ public class Pegging extends GroupOfCards<CribbageCard> {
 		return true;
 	}
 	
+	public void clear(){
+		super.clear();
+		currentCount = 0;
+	}
+	
 	public boolean canPlay(CribbageCard card){
 		return currentCount + card.getPoints() <= 31;
 	}

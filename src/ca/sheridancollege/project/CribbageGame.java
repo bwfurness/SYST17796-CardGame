@@ -22,8 +22,8 @@ public class CribbageGame extends Game<CribbagePlayer> {
 	public CribbageGame() {
 		super("Cribbage");
 		deck = new Deck();
-		pegging = new Pegging();
 		starter = new Starter();
+		pegging = new Pegging();
 		aiPlayer = new AIPlayer("AI", pegging); // TODO: figure out if this name is useful.
 		humanPlayer = new HumanPlayer("Human", pegging);
 		// todo - cut the deck twice to determine who gets first crib.
@@ -56,6 +56,7 @@ public class CribbageGame extends Game<CribbagePlayer> {
 			return;
 		}else{
 			go = null;
+			pegging.clear();
 			do{		
 				System.out.println("Score:");
 				System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
@@ -68,6 +69,9 @@ public class CribbageGame extends Game<CribbagePlayer> {
 						go = null;
 					}
 				}
+				if (playerWithoutCrib.won()){
+					return;
+				}
 				System.out.println("Score:");
 				System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
 				if (!playerWithCrib.play()){
@@ -79,7 +83,19 @@ public class CribbageGame extends Game<CribbagePlayer> {
 						go = null;
 					}
 				}
+				if (playerWithCrib.won()){
+					return;
+				}
 			} while (!pegging.isFull());
+			if (go == Go.CRIB){
+				if (playerWithCrib.score(1)){
+					return;
+				}
+			}else if (go == Go.NO_CRIB){
+				if (playerWithoutCrib.score(1)){
+					return;
+				}
+			}
 			if (playerWithoutCrib.score(nonCribHand.countPoints(starter))){
 				return;
 			}
@@ -101,6 +117,8 @@ public class CribbageGame extends Game<CribbagePlayer> {
 		}
 		deck.addCard(starter.takeCard());
 		humanCrib = !humanCrib;
+		humanPlayer.newTurn();
+		aiPlayer.newTurn();
 	}
 
 	public boolean won(){

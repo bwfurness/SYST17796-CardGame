@@ -46,6 +46,10 @@ public class GroupOfCards <T extends Card> {
 		return 0;
 	}
 	
+	public void clear(){
+		cards = new ArrayList<>(size);
+	}
+	
 	public T takeCard(){
 		return cards.remove(0);
 	}

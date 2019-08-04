@@ -77,6 +77,10 @@ public abstract class CribbagePlayer extends Player {
 		return false;
 	}
 	
+	public void newTurn(){
+		phase = CribbagePhase.PREPLAY;
+	}
+	
 	public void unplace(){
 		for (int i = 0; i < 4; i++){
 			placedCards[i] = null;
