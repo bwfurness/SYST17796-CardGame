@@ -24,7 +24,7 @@ public class RegularHand extends Hand {
 	public RegularHand copy(){
 		RegularHand copy = new RegularHand();
 		for (CribbageCard card : showCards()){
-			addCard(card);
+			copy.addCard(card);
 		}
 		return copy;
 	}
