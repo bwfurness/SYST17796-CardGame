@@ -33,3 +33,4 @@ public class Deck extends GroupOfCards<CribbageCard> {
 	}
 
 }
+

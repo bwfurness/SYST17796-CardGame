@@ -12,7 +12,11 @@ package ca.sheridancollege.project;
 public class Cribbage {
 	
 	public static void main (String[] args){
-	
+		CribbageGame game = new CribbageGame();
+		do {
+			game.play();
+		} while (!game.won());
+		game.declareWinner();
 	}
 
 }

@@ -23,7 +23,7 @@ public abstract class SuitValueCard<SUIT extends Enum, VALUE extends Enum> exten
 
 	@Override
 	public String toString() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return getValue().toString() + " of " +  getSuit().toString();
 	}
  
 }

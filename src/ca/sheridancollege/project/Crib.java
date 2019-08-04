@@ -11,5 +11,14 @@ package ca.sheridancollege.project;
  */
 public class Crib extends Hand {
 
+	@Override
+	public int flush(CribbageCard starter){
+		for (CribbageCard card : showCards()){
+			if (card.getSuit() != starter.getSuit()){
+				return 0;
+			}
+		}
+		return 5;
+	}
 
 }

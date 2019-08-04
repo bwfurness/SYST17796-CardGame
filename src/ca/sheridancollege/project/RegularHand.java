@@ -6,6 +6,8 @@
 
 package ca.sheridancollege.project;
 
+import java.util.List;
+
 /**
  *
  */
@@ -19,4 +21,22 @@ public class RegularHand extends Hand {
 		}
 	}
 
+	
+	@Override
+	public int flush(CribbageCard starter){
+		List<CribbageCard> hand = showCards();
+		// yes, 1
+		for (int i = 1; i < hand.size(); i++){
+			if (hand.get(0).getSuit() != hand.get(i).getSuit()){
+				return 0;
+			}
+		}
+		if (hand.get(0).getSuit() == starter.getSuit()){
+			return 5;
+		}else{
+			return 4;
+		}
+	}
+
+	
 }

@@ -17,15 +17,15 @@ public class CribbageGame extends Game<CribbagePlayer> {
 	private Starter starter;
 	private Pegging pegging;
 	private boolean humanCrib;
-	
+	private Go go;
 	
 	public CribbageGame() {
 		super("Cribbage");
 		deck = new Deck();
-		aiPlayer = new AIPlayer("AI"); // TODO: figure out if this name is useful.
-		humanPlayer = new HumanPlayer("Human");
-		starter = new Starter();
 		pegging = new Pegging();
+		starter = new Starter();
+		aiPlayer = new AIPlayer("AI", pegging); // TODO: figure out if this name is useful.
+		humanPlayer = new HumanPlayer("Human", pegging);
 		// todo - cut the deck twice to determine who gets first crib.
 		humanCrib = true;
 	}
@@ -42,28 +42,90 @@ public class CribbageGame extends Game<CribbagePlayer> {
 			playerWithoutCrib = humanPlayer;
 		}
 		RegularHand cribHand = playerWithCrib.getHand();
-		RegularHand nonCribHand = playerWithCrib.getHand();
+		RegularHand nonCribHand = playerWithoutCrib.getHand();
+		Crib crib = new Crib();
+		humanPlayer.setCrib(crib);
+		aiPlayer.setCrib(crib);
 		deck.deal(cribHand, nonCribHand);
+		System.out.println("Score:");
+		System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
 		playerWithoutCrib.play();
 		playerWithCrib.play();
 		boolean won = playerWithCrib.score(starter.addCard(deck.cut()));
 		if (won){
-			declareWinner();
+			return;
 		}else{
-			do{
-				playerWithoutCrib.play();
-				playerWithCrib.play();
+			go = null;
+			do{		
+				System.out.println("Score:");
+				System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+				if (!playerWithoutCrib.play()){
+					if (go == null){
+						go = Go.NO_CRIB;
+					}else if (go == Go.CRIB){
+						playerWithoutCrib.score(1);
+						pegging.refresh();
+						go = null;
+					}
+				}
+				System.out.println("Score:");
+				System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+				if (!playerWithCrib.play()){
+					if (go == null){
+						go = Go.CRIB;
+					}else if (go == Go.NO_CRIB){
+						playerWithCrib.score(1);
+						pegging.refresh();
+						go = null;
+					}
+				}
 			} while (!pegging.isFull());
-			playerWithoutCrib.donePegging();
-			playerWithCrib.donePegging();
-			playerWithoutCrib.play();
-			playerWithCrib.play();
+			if (playerWithoutCrib.score(nonCribHand.countPoints(starter))){
+				return;
+			}
+			System.out.println("Score:");
+			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+			if (playerWithCrib.score(cribHand.countPoints(starter))){
+				return;
+			}
+			System.out.println("Score:");
+			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+			playerWithCrib.score(playerWithCrib.getCrib().countPoints(starter));
+			System.out.println("Score:");
+			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+		}
+		for (int i = 0; i < 4; i ++){
+			deck.addCard(cribHand.takeCard());
+			deck.addCard(nonCribHand.takeCard());
+			deck.addCard(crib.takeCard());
+		}
+		deck.addCard(starter.takeCard());
+		humanCrib = !humanCrib;
+	}
+
+	public boolean won(){
+		return aiPlayer.won() || humanPlayer.won();
+	}	
+	
+	
+	@Override
+	public void declareWinner() {
+		if (humanPlayer.won()){
+			if (aiPlayer.skunked()){
+				System.out.println ("You skunked the AI!");
+			}else{
+				System.out.println ("You won!");
+			}
+		}else if (humanPlayer.skunked()){
+			System.out.println("You got skunked!");
+		}else{
+			System.out.println("You lost!");
 		}
 	}
 
-	@Override
-	public void declareWinner() {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	enum Go{
+		CRIB,
+		NO_CRIB;
 	}
-
+	
 }

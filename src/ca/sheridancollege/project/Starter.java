@@ -18,6 +18,7 @@ public class Starter extends GroupOfCards<CribbageCard> {
 	@Override
 	public int addCard(CribbageCard card){
 		super.addCard(card);
+		System.out.println ("The Starter is a " + card.toString());
 		if (card.getValue() == Value.JACK){
 			return 2;
 		}else{

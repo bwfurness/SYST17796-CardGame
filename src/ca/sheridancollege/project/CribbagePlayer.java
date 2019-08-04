@@ -9,52 +9,87 @@ package ca.sheridancollege.project;
 /**
  *
  */
-public class CribbagePlayer extends Player {
+public abstract class CribbagePlayer extends Player {
 
 	private RegularHand hand;
+	private Crib crib;
 	private int points;
 	private CribbagePhase phase;
+	protected final Pegging pegging;
+	private CribbageCard[] placedCards = new CribbageCard[4];
 	
-	public CribbagePlayer(String name) {
+	public CribbagePlayer(String name, Pegging pegging) {
 		super(name);
 		hand = new RegularHand();
 		points = 0;
+		phase = CribbagePhase.PREPLAY;
+		this.pegging = pegging;
+	}
+	
+	public void setCrib(Crib crib){
+		this.crib = crib;
 	}
 
 	@Override
-	public void play() {
+	public boolean play() {
 		switch (phase){
 			case PREPLAY:
 				preplay();
+				phase = CribbagePhase.PEG;
+				unplace();
 				break;
 			case PEG:
-				peg();
-				break;
-			case COUNT:
-				count();
-				break;
+				return peg();
 		}
+		return false;
 	}
 	
-	public void preplay(){
-		phase = CribbagePhase.PEG;
-	}
+	public abstract void preplay();
+
 	
-	public void peg(){
-	}
+	public abstract boolean peg();
 	
-	public void count(){
-		phase = CribbagePhase.PREPLAY;
-	}
-	
-	public void donePegging(){
-		phase = CribbagePhase.COUNT;
+	public Crib getCrib(){
+		return crib;
 	}
 	
 	public enum CribbagePhase{
 		PREPLAY,
-		PEG,
-		COUNT
+		PEG
+	}
+	
+	public boolean place(int code){
+		int i = 0;
+		for (CribbageCard card : hand.showCards()){
+			if (pegging.canPlay(card) && !placed(card)){
+				if (i == code){
+					score(pegging.addCard(card));
+					for (int j = 0; j < 4; j++){
+						if (placedCards[j] == null){
+							placedCards[j] = card;
+							return true;
+						}
+					}
+				}
+				i ++;
+			}
+		}
+		return false;
+	}
+	
+	public void unplace(){
+		for (int i = 0; i < 4; i++){
+			placedCards[i] = null;
+		}
+	}
+	
+	public boolean placed(CribbageCard card){
+		for (int i = 0; i < 4; i++){
+			if (placedCards[i] == card){ // yes, == will work here.
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public RegularHand getHand(){
@@ -68,6 +103,15 @@ public class CribbagePlayer extends Player {
 	
 	public int getPoints(){
 		return points;
+	}
+	
+	public boolean won(){
+		return points > 120;
+	}
+	
+	
+	public boolean skunked(){
+		return points <= 90;
 	}
 	
 }
