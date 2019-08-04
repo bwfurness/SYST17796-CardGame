@@ -27,7 +27,7 @@ public class CribbageGame extends Game<CribbagePlayer> {
 		aiPlayer = new AIPlayer("AI", pegging); // TODO: figure out if this name is useful.
 		humanPlayer = new HumanPlayer("Human", pegging);
 		// todo - cut the deck twice to determine who gets first crib.
-		humanCrib = true;
+		humanCrib = Math.random() > 0.5;
 	}
 	
 
@@ -35,9 +35,11 @@ public class CribbageGame extends Game<CribbagePlayer> {
 	public void play() {
 		CribbagePlayer playerWithCrib, playerWithoutCrib;
 		if (humanCrib){
+			System.out.println ("You have Crib");
 			playerWithCrib = humanPlayer;
 			playerWithoutCrib = aiPlayer;
 		}else{
+			System.out.println ("The AI has crib");
 			playerWithCrib = aiPlayer;
 			playerWithoutCrib = humanPlayer;
 		}
