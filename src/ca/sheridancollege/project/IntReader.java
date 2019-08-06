@@ -24,14 +24,15 @@ public class IntReader {
 		while (true){
 			try {
 				ret = scanner.nextInt();
-				if (ret >= min || ret < max){
+				if (ret >= min && ret < max){
 					return ret;
 				} else{
-					System.out.println ("Please enter a number between " + min + " and " + max);
+					System.out.println ("Please enter a number between " + min + " and " + (max - 1));
 				}
 			} catch (InputMismatchException e){
 				System.out.println ("Please enter a valid number");
 			}
+			scanner.next();
 		}
 	}
 
