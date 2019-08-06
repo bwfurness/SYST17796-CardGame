@@ -6,6 +6,8 @@
 
 package ca.sheridancollege.project;
 
+import java.util.ArrayList;
+
 /**
  *
  */
@@ -26,9 +28,21 @@ public class CribbageGame extends Game<CribbagePlayer> {
 		pegging = new Pegging();
 		aiPlayer = new AIPlayer("AI", pegging); // TODO: figure out if this name is useful.
 		humanPlayer = new HumanPlayer("Human", pegging);
+		// add the players to the list that we never use
 		// todo - cut the deck twice to determine who gets first crib.
 		humanCrib = Math.random() > 0.5;
 	}
+	
+	@Override
+	public ArrayList<CribbagePlayer> getPlayers(){
+		System.err.println("Cribbage Players should not be modified directly.");
+		return null;
+	}
+	
+	@Override
+	public void setPlayers(ArrayList<CribbagePlayer> playersList){
+		System.err.println("Cribbage players should not be modified directly.");
+	} 
 	
 
 	@Override

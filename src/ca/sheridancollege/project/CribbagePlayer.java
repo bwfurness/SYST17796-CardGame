@@ -102,7 +102,7 @@ public abstract class CribbagePlayer extends Player {
 	
 	public boolean score(int points){
 		this.points += points;
-		return points > 120;
+		return this.points > 120;
 	}
 	
 	public int getPoints(){
