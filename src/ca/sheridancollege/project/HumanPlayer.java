@@ -6,14 +6,12 @@
 
 package ca.sheridancollege.project;
 
-import java.util.Scanner;
-
 /**
  *
  */
 public class HumanPlayer extends CribbagePlayer {
 
-	Scanner scanner = new Scanner (System.in);
+	IntReader reader = new IntReader ();
 	
 	public HumanPlayer(String name, Pegging pegging) {
 		super(name, pegging);
@@ -34,7 +32,7 @@ public class HumanPlayer extends CribbagePlayer {
 		if (i == 1){
 			return false;
 		}
-		int code = scanner.nextInt() - 1;
+		int code = reader.nextInt(1, i) - 1;
 		place(code);
 		return true;
 	}
@@ -47,14 +45,14 @@ public class HumanPlayer extends CribbagePlayer {
 			System.out.println (i + ") " + card.toString());
 			i ++;
 		}
-		int code = scanner.nextInt() - 1;
+		int code = reader.nextInt(1, i) - 1;
 		hand.giveToCrib(hand.showCards().get(code), getCrib());
 		i = 1;
 		for (CribbageCard card : hand.showCards()){
 			System.out.println (i + ") " + card.toString());
 			i++;
 		}
-		code = scanner.nextInt() - 1;
+		code = reader.nextInt(1, i) - 1;
 		hand.giveToCrib(hand.showCards().get(code), getCrib());
 	}
 
