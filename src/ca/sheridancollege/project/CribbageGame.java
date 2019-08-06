@@ -7,17 +7,20 @@
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
  */
 public class CribbageGame extends Game<CribbagePlayer> {
 
-	private Deck deck;
-	private AIPlayer aiPlayer;
-	private HumanPlayer humanPlayer;
-	private Starter starter;
-	private Pegging pegging;
+	private final Scanner scanner = new Scanner (System.in);
+	
+	private final Deck deck;
+	private final AIPlayer aiPlayer;
+	private final HumanPlayer humanPlayer;
+	private final Starter starter;
+	private final Pegging pegging;
 	private boolean humanCrib;
 	private Go go;
 	
@@ -103,12 +106,12 @@ public class CribbageGame extends Game<CribbagePlayer> {
 					return;
 				}
 			} while (!pegging.isFull());
-			if (go == Go.CRIB){
-				if (playerWithCrib.score(1)){
+			if (go == Go.NO_CRIB){
+				if (playerWithoutCrib.score(1)){
 					return;
 				}
-			}else if (go == Go.NO_CRIB){
-				if (playerWithoutCrib.score(1)){
+			}else if (go == Go.NO_CRIB || pegging.getCurrentCount() > 0){
+				if (playerWithCrib.score(1)){
 					return;
 				}
 			}
@@ -117,14 +120,17 @@ public class CribbageGame extends Game<CribbagePlayer> {
 			}
 			System.out.println("Score:");
 			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+			scanner.nextLine();
 			if (playerWithCrib.score(cribHand.countPoints(starter))){
 				return;
 			}
 			System.out.println("Score:");
 			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+			scanner.nextLine();
 			playerWithCrib.score(playerWithCrib.getCrib().countPoints(starter));
 			System.out.println("Score:");
 			System.out.println("You: " + humanPlayer.getPoints() + "    AI: " + aiPlayer.getPoints());
+			scanner.nextLine();
 		}
 		for (int i = 0; i < 4; i ++){
 			deck.addCard(cribHand.takeCard());

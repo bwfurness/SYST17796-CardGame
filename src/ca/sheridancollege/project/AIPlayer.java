@@ -49,6 +49,11 @@ public class AIPlayer extends CribbagePlayer {
 				break;
 			}
 		}
-		return place(0);
+		if (place(0)){
+			return true;
+		}else{
+			System.out.println("The AI calls go");
+			return false;
+		}
 	}
 }

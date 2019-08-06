@@ -30,6 +30,7 @@ public class HumanPlayer extends CribbagePlayer {
 			}
 		}
 		if (i == 1){
+			System.out.println("You call go");
 			return false;
 		}
 		int code = reader.nextInt(1, i) - 1;

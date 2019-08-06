@@ -31,8 +31,8 @@ public class IntReader {
 				}
 			} catch (InputMismatchException e){
 				System.out.println ("Please enter a valid number");
+				scanner.next();
 			}
-			scanner.next();
 		}
 	}
 
