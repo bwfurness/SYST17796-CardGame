@@ -29,10 +29,6 @@ public class Pegging extends GroupOfCards<CribbageCard> {
 		if (currentCount == 15){
 			totalRet += 2;
 		}
-		if (currentCount == 31){
-			totalRet += 2;
-			currentCount = 0;
-		}
 		ArrayList<CribbageCard> cards = showCards();
 		int pair = 0;
 		int scoreCheck = currentCount;
@@ -74,6 +70,10 @@ public class Pegging extends GroupOfCards<CribbageCard> {
 		}
 		if (runSize > 2){
 			totalRet += runSize;
+		}
+		if (currentCount == 31){
+			totalRet += 2;
+			currentCount = 0;
 		}
 		return totalRet;
 	}
