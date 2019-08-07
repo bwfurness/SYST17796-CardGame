@@ -34,7 +34,6 @@ public class AIPlayer extends CribbagePlayer {
 				}
 			}
 		}
-		// we will make the ai make sense later
 		getHand().giveToCrib(getHand().showCards().get(card2), getCrib());
 		getHand().giveToCrib(getHand().showCards().get(card1), getCrib());
 		getHand().showCards().sort((a, b) -> {return b.getValue().compareTo(a.getValue());});
